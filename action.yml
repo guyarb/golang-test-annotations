@@ -1,0 +1,13 @@
+name: 'Golang Test Annotations'
+description: 'Given a test output of go test, the failed tests will be annotated.'
+inputs:
+  test-results:  # Path of the test results
+    description: 'The path of the go test results'
+    required: true
+    default: 'test.json'
+runs:
+  using: 'node12'
+  main: 'index.js'
+branding:
+  icon: "check"
+  color: "green"

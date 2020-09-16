@@ -1,0 +1,24 @@
+{
+  "name": "golang-test-annoations",
+  "version": "1.0.0",
+  "description": "A github action which annotates failed tests.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guyarb/golang-test-annoations.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guyarb/golang-test-annoations/issues"
+  },
+  "homepage": "https://github.com/guyarb/golang-test-annoations#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.5",
+    "line-by-line": "^0.1.6"
+  }
+}
