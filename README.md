@@ -33,7 +33,7 @@ jobs:
 
       - name: annotate tests
         if: always()
-        uses: guyarb/golang-test-annoations@v0.1
+        uses: guyarb/golang-test-annoations@v0.2.0
         with:
           test-results: test.json
 ```
