@@ -1,4 +1,4 @@
-# golang-test-annoations
+# golang-test-annotations
 A github action which annotates failed tests.
 
 ![GitHub Annotations](./static/example.png)
