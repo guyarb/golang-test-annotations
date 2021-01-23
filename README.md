@@ -3,37 +3,39 @@ A github action which annotates failed tests.
 
 ![GitHub Annotations](./static/example.png)
 
+An example run can be found [here](https://github.com/guyarb/golang-test-annotations-example/actions/runs/505258482)
+
 ## How to use
 
 Add to your workflow the following contents:
 
 ```yaml
-name: workflow
+name: pr
 
 on:
-  push:
-    branches: [ '**' ]
   pull_request:
+    branches: [ '**' ]
+  workflow_dispatch:
     branches: [ '**' ]
 
 jobs:
   full_ci:
+    strategy:
+      matrix:
+        go-version: [ 1.14.x ]
+
     runs-on: ubuntu-18.04
 
     steps:
-      - name : checkout
+      - name: checkout
         uses: actions/checkout@v2
-
-      - uses: actions/setup-go@v2
-        with:
-          go-version: '1.14'
 
       - name: run tests
         run: go test -json ./... > test.json
 
-      - name: annotate tests
+      - name: Annotate tests
         if: always()
-        uses: guyarb/golang-test-annotations@v0.3.0
+        uses: guyarb/golang-test-annoations@v0.3.0
         with:
           test-results: test.json
 ```
