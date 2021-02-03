@@ -3,6 +3,7 @@ const lineReader = require('line-by-line');
 
 try {
 	const testResultsPath = core.getInput('test-results');
+	const customPackageName = core.getInput('package-name');
 
 	var obj = new Object();
 	var lr = new lineReader(testResultsPath);
@@ -18,8 +19,12 @@ try {
 			return;
 		}
 		output = output.replace("\n", "%0A").replace("\r", "%0D")
-		// Removing the github.com/owner/reponame
+		// Strip github.com/owner/repo package from the path by default
 		var packageName = currentLine.Package.split("/").slice(3).join("/");
+		// If custom package is provided, strip custom package name from the path
+		if (customPackageName != null) {
+			packageName = currentLine.Package.replace(customPackageName + "/", "")
+		}
 		var newEntry = packageName + "/" + testName;
 		if (!obj.hasOwnProperty(newEntry)) {
 			obj[newEntry] = output;
