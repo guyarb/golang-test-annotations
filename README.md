@@ -38,6 +38,7 @@ jobs:
         uses: guyarb/golang-test-annoations@v0.3.0
         with:
           test-results: test.json
+          package-name: foobar # optional, if using custom package name, github.com/owner/repo stripped from the pathname by default
 ```
 
 ## Development of this action
