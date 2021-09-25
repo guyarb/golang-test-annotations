@@ -5,6 +5,8 @@ inputs:
     description: 'The path of the go test results'
     required: true
     default: 'test.json'
+  package-name:
+    description: 'Package name override'
 runs:
   using: 'node12'
   main: 'dist/index.js'
