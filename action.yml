@@ -6,7 +6,9 @@ inputs:
     required: true
     default: 'test.json'
   package-name:
+    required: false
     description: 'Package name override'
+    default:
 runs:
   using: 'node12'
   main: 'dist/index.js'

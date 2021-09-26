@@ -11,9 +11,3 @@ updates:
       interval: 'weekly'
     reviewers:
       - "guyarb"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    reviewers:
-      - "guyarb"
