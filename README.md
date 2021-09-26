@@ -35,7 +35,7 @@ jobs:
 
       - name: Annotate tests
         if: always()
-        uses: guyarb/golang-test-annotations@v0.3.0
+        uses: guyarb/golang-test-annotations@v0.5.0
         with:
           test-results: test.json
           package-name: foobar # optional, if using custom package name, github.com/owner/repo stripped from the pathname by default
