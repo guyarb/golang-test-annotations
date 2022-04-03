@@ -22,14 +22,19 @@ jobs:
   full_ci:
     strategy:
       matrix:
-        go-version: [ 1.14.x ]
+        go_version: [ 1.18.x ]
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go_version }}
+        
       - name: run tests
         run: go test -json ./... > test.json
 
