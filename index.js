@@ -3,6 +3,8 @@ const lineReader = require('line-by-line');
 const fs = require('fs');
 
 try {
+	const regex = /(\s*[\w\d]+_test.go:\d+:)(.*?)(Test:\s+Test[\w\d]*?%0A)/gu; // Extracts only the failure from the logs (including whitespace)
+
 	const testResultsPath = core.getInput('test-results');
 	const customPackageName = core.getInput('package-name');
 
@@ -49,10 +51,13 @@ try {
 	lr.on('end', function() {
 		for (const [key, value] of Object.entries(obj)) {
 			if (value.includes("FAIL") && value.includes("_test.go")) {
-				const parts = value.split("%0A")[1].trim().split(":");
-				const file = key.split("/").slice(0, -1).join("/") + "/" + parts[0];
-				const lineNumber = parts[1];
-				core.info(`::error file=${file},line=${lineNumber}::${value}`)
+				var result;
+				while ((result = regex.exec(value)) !== null) {
+					const parts = result[0].split(":");
+					const file = key.split("/").slice(0, -1).join("/") + "/" + parts[0].trimStart();
+					const lineNumber = parts[1];
+					core.info(`::error file=${file},line=${lineNumber}::${result[0]}`);
+				}
 			}
 		}
 	});
