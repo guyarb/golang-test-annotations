@@ -4,6 +4,7 @@
   "description": "A github action which annotates failed tests.",
   "main": "index.js",
   "scripts": {
+    "run": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
