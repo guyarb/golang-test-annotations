@@ -10,8 +10,8 @@ inputs:
     description: 'Package name override'
     default:
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: 'node16'
+  main: 'index.js'
 branding:
   icon: "check"
   color: "green"

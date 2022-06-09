@@ -2,8 +2,9 @@ const core = require('@actions/core');
 const lineReader = require('line-by-line');
 const fs = require('fs');
 
+
 try {
-	const regex = /(\s*[\w\d]+_test.go:\d+:)(.*?)(Test:\s+Test[\w\d]*?%0A)/gu; // Extracts only the failure from the logs (including whitespace)
+	const regex = /(\s*[\w\d]+_test.go:\d+:)(.*?)(Test:\s+Test[\w\d]*?\S+)/gu; // Extracts only the failure from the logs (including whitespace)
 
 	const testResultsPath = core.getInput('test-results');
 	const customPackageName = core.getInput('package-name');
@@ -15,22 +16,22 @@ try {
 		return
 	}
 
-	var obj = new Object();
-	var lr = new lineReader(testResultsPath);
+	let obj = {};
+	let lr = new lineReader(testResultsPath);
 	lr.on('line', function(line) {
 		const currentLine = JSON.parse(line);
-		var testName = currentLine.Test;
+		const testName = currentLine.Test;
 		if (typeof testName === "undefined") {
 			return;
 		}
 
-		var output = currentLine.Output;
+		let output = currentLine.Output;
 		if (typeof output === "undefined") {
 			return;
 		}
 		output = output.replace("\n", "%0A").replace("\r", "%0D")
 		// Strip github.com/owner/repo package from the path by default
-		var packageName = currentLine.Package.split("/").slice(3).join("/");
+		let packageName = currentLine.Package.split("/").slice(3).join("/");
 		// If custom package is provided, strip custom package name from the path
 		if (customPackageName !== "") {
 			if (!currentLine.Package.startsWith(customPackageName)) {
@@ -41,7 +42,7 @@ try {
 				packageName = currentLine.Package.replace(customPackageName + "/", "")
 			}
 		}
-		var newEntry = packageName + "/" + testName;
+		let newEntry = packageName + "/" + testName;
 		if (!obj.hasOwnProperty(newEntry)) {
 			obj[newEntry] = output;
 		} else {
@@ -57,6 +58,7 @@ try {
 					const file = key.split("/").slice(0, -1).join("/") + "/" + parts[0].trimStart();
 					const lineNumber = parts[1];
 					core.info(`::error file=${file},line=${lineNumber}::${result[0]}`);
+					console.log(`::error file=${file},line=${lineNumber}::${result[0]}`)
 				}
 			}
 		}
