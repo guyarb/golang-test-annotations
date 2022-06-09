@@ -55,7 +55,7 @@ try {
 				var result;
 				while ((result = regex.exec(value)) !== null) {
 					const parts = result[0].split(":");
-					const file = key.split("/").slice(0, -1).join("/") + "/" + parts[0].trimStart();
+					const file = key.split("/").slice(0, -2).join("/") + "/" + parts[0].trimStart();
 					const lineNumber = parts[1];
 					core.info(`::error file=${file},line=${lineNumber}::${result[0]}`);
 					console.log(`::error file=${file},line=${lineNumber}::${result[0]}`)
