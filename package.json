@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/guyarb/golang-test-annoations#readme",
   "dependencies": {
-    "@actions/core": "^1.6.0",
+    "@actions/core": "^1.10.0",
     "line-by-line": "^0.1.6"
   }
 }
