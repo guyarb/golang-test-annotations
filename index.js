@@ -8,6 +8,7 @@ try {
 
 	const testResultsPath = core.getInput('test-results');
 	const customPackageName = core.getInput('package-name');
+	const workingDirectory = core.getInput('working-directory');
 
 	if (!fs.existsSync(testResultsPath)) {
 		core.warning(
@@ -18,7 +19,7 @@ try {
 
 	let obj = {};
 	let lr = new lineReader(testResultsPath);
-	lr.on('line', function(line) {
+	lr.on('line', function (line) {
 		const currentLine = JSON.parse(line);
 		const testName = currentLine.Test;
 		if (typeof testName === "undefined") {
@@ -42,6 +43,9 @@ try {
 				packageName = currentLine.Package.replace(customPackageName + "/", "")
 			}
 		}
+		if (workingDirectory !== "") {
+			packageName = workingDirectory + "/" + packageName
+		}
 		let newEntry = packageName + "/" + testName;
 		if (!obj.hasOwnProperty(newEntry)) {
 			obj[newEntry] = output;
@@ -49,7 +53,7 @@ try {
 			obj[newEntry] += output;
 		}
 	});
-	lr.on('end', function() {
+	lr.on('end', function () {
 		for (const [key, value] of Object.entries(obj)) {
 			if (value.includes("FAIL") && value.includes("_test.go")) {
 				var result;
